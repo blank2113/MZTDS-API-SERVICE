@@ -1,0 +1,54 @@
+# MZTDS-API-SERVICE
+
+[![Node.js](https://img.shields.io/badge/node-%3E%3D22.x-brightgreen)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-%3E%3D5.x-blue)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/prisma-%3E%3D6.x-3333ff)](https://www.prisma.io/)
+[![GitHub Workflow](https://img.shields.io/github/actions/workflow/status/blank2113/MZTDS-API-SERVICE/ci.yml?branch=prod)](https://github.com/blank2113/MZTDS-API-SERVICE/actions)
+[![License](https://img.shields.io/github/license/blank2113/MZTDS-API-SERVICE)](LICENSE)
+
+---
+
+## 📌 Описание
+
+MZTDS-API-SERVICE — это backend-сервис на **Node.js + TypeScript**, использующий **Prisma** и **PostgreSQL**.  
+Сервис предназначен для управления данными, с поддержкой:
+
+- REST API через **Express**
+- Управление статусами рабочего дня
+- Интеграция с Redis
+- CI/CD через GitHub Actions
+- Строгий контроль качества кода и проверка тестов перед merge в `prod`
+
+---
+
+## ⚡ Особенности
+
+- Автоматический запуск CI/CD при push в ветки `test` / `feature`
+- Обязательные проверки (`install`, `lint`, `test`, `build`) перед merge в `prod`
+- Защита ветки `prod` через GitHub Rulesets
+- Автоматическое удаление веток после успешного merge
+- Использование TypeScript с проверкой типов
+- Управление БД через Prisma ORM
+
+---
+
+## 🛠 Технологии
+
+- Node.js 22.x  
+- TypeScript 5.x  
+- Express.js 5.x  
+- Prisma 6.x  
+- PostgreSQL 15  
+- Redis 7  
+- GitHub Actions (CI/CD)  
+- ESLint + Prettier + Vitest
+
+---
+
+## 🚀 Установка и запуск
+
+1. Клонировать репозиторий:
+
+```bash
+git clone git@github.com:blank2113/MZTDS-API-SERVICE.git
+cd MZTDS-API-SERVICE
