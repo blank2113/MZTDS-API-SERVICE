@@ -1,0 +1,66 @@
+name: CI Process
+
+on:
+  push:
+    branches: ["prod"]
+  pull_request:
+    branches: ["prod"]
+env:
+   DATABASE_URL: "postgresql://test:test@localhost:5432/test?schema=public"
+  JWT_SECRET: "testsecret"
+  PREFIX: "/api/v1"
+  REDIS_HOST: "localhost"
+  REDIS_PASS: ""
+jobs:
+  checking:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        options: >-
+          --health-cmd "pg_isready -U test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: "postgresql://test:test@localhost:5432/test?schema=public"
+      JWT_SECRET: "testsecret"
+      PREFIX: "/api/v1"
+      REDIS_HOST: "localhost"
+      REDIS_PASS: ""
+      ADMIN_BOT_TOKEN: "8335712232:AAE4Is9Zh_Q-d-vMBzK9Lu2zDqVkdN55wzo"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Starting Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: "npm"
+      - name: install modules
+        run: npm install
+      - name: Apply Prisma migrations
+        run: npx prisma migrate deploy
+      - name: Run ESLint
+        run: npm run lint
+      - name: Run Tests
+        run: npm run test
+      - name: build project
+        run: npm run build
