@@ -19,7 +19,7 @@
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "express": "^5.2.1",
-    "prisma": "^6.19.2"
+    "prisma": "^7.2.0"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",
