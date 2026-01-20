@@ -7,7 +7,7 @@ describe("Default test2", () => {
   it("Get default route2", async () => {
     const res = await request(app).get("/health");
 
-    expect(res.status).toBe(500);
+    expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("message");
   });
 });
