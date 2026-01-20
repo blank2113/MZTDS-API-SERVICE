@@ -11,3 +11,6 @@ app.use(cors({ origin: "*" }));
 app.get("/", (_, res: Response) => {
   res.status(200).json({ message: "Server is ok!!" });
 });
+app.get("/health", (_, res: Response) => {
+  res.status(200).json({ message: "Server is health!!" });
+});
