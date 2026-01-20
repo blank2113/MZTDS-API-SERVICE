@@ -2,7 +2,7 @@ import request from "supertest";
 import { describe, it, expect } from "vitest";
 import { app } from "./app.js";
 
-// Default test
+// Default test2
 describe("Default test2", () => {
   it("Get default route2", async () => {
     const res = await request(app).get("/health");
