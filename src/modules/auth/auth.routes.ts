@@ -3,8 +3,8 @@ import {
   CreateUserHandler,
   LoginUserHandler,
   LogoutUserHandler,
-} from "./auth.controller";
-import { registerAuthOpenApi } from "./auth.openapi";
+} from "./auth.controller.js";
+import { registerAuthOpenApi } from "./auth.openapi.js";
 
 const router = Router();
 registerAuthOpenApi();

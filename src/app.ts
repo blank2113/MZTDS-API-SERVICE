@@ -4,7 +4,6 @@ import cors from "cors";
 import { RedisStore } from "connect-redis";
 import swaggerUi from "swagger-ui-express";
 import session from "express-session";
-
 import routes from "./routes.js";
 import bodyParser from "body-parser";
 import { redisClient } from "./redisClient.js";
@@ -35,6 +34,7 @@ app.use(bodyParser.json({ limit: "20mb" }));
 app.use(`${process.env.PREFIX}`, routes);
 const openApiDocument = generateOpenApiDocument();
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+
 // Health check
 app.get("/", requireAuth, (_, res: Response) => {
   res.status(200).json({ message: "Server is ok!!" });
