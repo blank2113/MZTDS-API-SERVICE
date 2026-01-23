@@ -45,12 +45,12 @@ export function registerAdminOpenApi() {
   // GET /admin/sessions/:userId — админ: получить все сессии пользователя
   registry.registerPath({
     method: "get",
-    path: `${prefix}/admin/sessions/{userId}`,
+    path: `${prefix}/admin/sessions/{user_id}`,
     tags: ["Admin"],
     summary: "Admin: Get all sessions of a user",
     parameters: [
       {
-        name: "userId",
+        name: "user_id",
         in: "path",
         required: true,
         schema: { type: "integer" },
@@ -67,18 +67,18 @@ export function registerAdminOpenApi() {
   // DELETE /admin/sessions/:userId/:sessionId — админ: удалить конкретную сессию
   registry.registerPath({
     method: "delete",
-    path: `${prefix}/admin/sessions/{userId}/{sessionId}`,
+    path: `${prefix}/admin/sessions/{user_id}/{session_id}`,
     tags: ["Admin"],
     summary: "Admin: Logout specific session of a user",
     parameters: [
       {
-        name: "userId",
+        name: "user_id",
         in: "path",
         required: true,
-        schema: { type: "integer" },
+        schema: { type: "number" },
       },
       {
-        name: "sessionId",
+        name: "session_id",
         in: "path",
         required: true,
         schema: { type: "string" },
@@ -96,12 +96,12 @@ export function registerAdminOpenApi() {
   // DELETE /admin/sessions/:userId — админ: удалить все сессии пользователя
   registry.registerPath({
     method: "delete",
-    path: `${prefix}/admin/sessions/{userId}`,
+    path: `${prefix}/admin/sessions/{user_id}`,
     tags: ["Admin"],
     summary: "Admin: Logout all sessions of a user",
     parameters: [
       {
-        name: "userId",
+        name: "user_id",
         in: "path",
         required: true,
         schema: { type: "integer" },

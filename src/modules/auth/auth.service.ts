@@ -46,7 +46,7 @@ export const login = async (dto: LoginDTO) => {
   return user;
 };
 
-export const getMe = async (id: number) => {
+export const getMe = async (id?: number) => {
   const user = await prisma.user.findFirst({
     where: { id },
     select: {

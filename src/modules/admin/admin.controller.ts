@@ -4,20 +4,13 @@ import { redisClient } from "../../redisClient.js";
 
 export const GetUserSessionsHandler = catchAsync(
   async (req: Request, res: Response) => {
-    if (req.session.role !== "ADMIN") {
-      return res.status(403).json({ message: "Forbidden" });
-    }
-
-    const targetUserId = Number(req.params.userId);
-    if (!targetUserId)
-      return res.status(400).json({ message: "User ID required" });
-
+    const targetUserId = Number(req.params.user_id);
     const sessionsKey = `user_sessions:${targetUserId}`;
     const sessionIds = await redisClient.zRange(sessionsKey, 0, -1);
 
     const sessions = await Promise.all(
       sessionIds.map(async (id) => {
-        if (id === req.sessionID) return null; // исключаем текущую сессию админа
+        if (id === req.sessionID) return null;
         const sess = await redisClient.get(`sess:${id}`);
         return sess ? { sessionId: id, ...JSON.parse(sess) } : null;
       }),
@@ -29,18 +22,8 @@ export const GetUserSessionsHandler = catchAsync(
 
 export const LogoutUserSessionHandler = catchAsync(
   async (req: Request, res: Response) => {
-    if (req.session.role !== "ADMIN") {
-      return res.status(403).json({ message: "Forbidden" });
-    }
-
-    const targetUserId = Number(req.params.userId);
-    let sessionId = req.params.sessionId;
-
-    if (!targetUserId || !sessionId) {
-      return res
-        .status(400)
-        .json({ message: "User ID and Session ID required" });
-    }
+    const targetUserId = Number(req.params.user_id);
+    let sessionId = req.params.session_id;
 
     if (Array.isArray(sessionId)) sessionId = sessionId[0];
 
@@ -61,14 +44,7 @@ export const LogoutUserSessionHandler = catchAsync(
 
 export const LogoutAllUserSessionsHandler = catchAsync(
   async (req: Request, res: Response) => {
-    if (req.session.role !== "ADMIN") {
-      return res.status(403).json({ message: "Forbidden" });
-    }
-
     const targetUserId = Number(req.params.userId);
-    if (!targetUserId)
-      return res.status(400).json({ message: "User ID required" });
-
     const sessionsKey = `user_sessions:${targetUserId}`;
     const sessionIds = await redisClient.zRange(sessionsKey, 0, -1);
 
@@ -81,11 +57,6 @@ export const LogoutAllUserSessionsHandler = catchAsync(
 
 export const GetAllUserSessionsHandler = catchAsync(
   async (req: Request, res: Response) => {
-    if (req.session.role !== "ADMIN") {
-      return res.status(403).json({ message: "Forbidden" });
-    }
-
-    // Получаем все ключи сессий пользователей
     const userKeys = await redisClient.keys("user_sessions:*");
 
     const allSessions = await Promise.all(

@@ -13,12 +13,75 @@ enum Roles {
   MODERATOR
 }
 
+enum TableRole {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
 model User {
   id         Int      @id @default(autoincrement())
-  name       String
+  name       String   @unique
   email      String   @unique
   password   String
   role       Roles    @default(USER)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  tables UserToTable[]
+
+  @@index([name, email])
+}
+
+model Table {
+  id         Int      @id @default(autoincrement())
+  name       String
+  columns    Column[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  users UserToTable[]
+
+  @@index([name])
+}
+
+model UserToTable {
+  user_id  Int
+  table_id Int
+  role     TableRole @default(VIEWER)
+
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  table      Table    @relation(fields: [table_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@id([user_id, table_id])
+}
+
+model Column {
+  id         Int      @id @default(autoincrement())
+  data       Json
+  table_id   Int
+  table      Table    @relation(fields: [table_id], references: [id], onDelete: Cascade)
+  cards      Card[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id, table_id])
+}
+
+model Card {
+  id         Int      @id @default(autoincrement())
+  data       Json
+  column_id  Int
+  column     Column   @relation(fields: [column_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([id, column_id])
+}
+
+model AuditLog {
+  id   Int  @id @default(autoincrement())
+  data Json
 }
