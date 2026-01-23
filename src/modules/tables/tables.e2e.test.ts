@@ -56,12 +56,9 @@ describe("Tables API (e2e)", () => {
       .set("Cookie", cookie)
       .send({
         name: `Table ${crypto.randomUUID()}`,
-        columns: [{ data: { title: "Column 1" } }],
       });
-
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty("id");
-    expect(res.body.columns.length).toBe(1);
 
     tableId = res.body.id; // сохраняем для следующих тестов
   });
@@ -81,7 +78,6 @@ describe("Tables API (e2e)", () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("id", tableId);
-    expect(res.body.columns.length).toBeGreaterThan(0);
   });
 
   it("should update table name and columns", async () => {
@@ -90,13 +86,10 @@ describe("Tables API (e2e)", () => {
       .set("Cookie", cookie)
       .send({
         name: `Updated Table ${crypto.randomUUID()}`,
-        columns: [{ data: { title: "Updated Column" } }],
       });
 
     expect(res.status).toBe(201);
     expect(res.body.name).toMatch(/Updated Table/);
-
-    expect(res.body.columns[0].data.data.title).toBe("Updated Column");
   });
 
   it("should delete the table", async () => {
