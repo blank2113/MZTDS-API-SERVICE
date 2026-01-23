@@ -9,3 +9,15 @@ declare module "express-session" {
     ip?: string;
   }
 }
+
+declare global {
+  namespace Express {
+    interface Request {
+      table?: {
+        id: number;
+        role: TableRole;
+        owner_id: number;
+      };
+    }
+  }
+}

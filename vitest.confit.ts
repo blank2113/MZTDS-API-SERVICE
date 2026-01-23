@@ -5,5 +5,6 @@ export default defineConfig({
     environment: "node",
     // setupFiles: ["./src/"],
     globals: true,
+    sequence: {},
   },
 });
