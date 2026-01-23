@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { tableAccess } from "../../middleware/tableRole.middlewate.js";
+import { tableAccess } from "../../middleware/tableRole.middleware.js";
 import { TableRole } from "../../generated/prisma/enums.js";
 import {
   AddUserToTableHandler,
@@ -10,7 +10,7 @@ import {
 import { requireAuth } from "../../middleware/auth.middleware.js";
 import { registerUsersOpenApi } from "./users.openapi.js";
 import { CreateTableHandler } from "../tables/tables.controller.js";
-import { validate } from "../../middleware/validate.moddleware.js";
+import { validate } from "../../middleware/validate.middleware.js";
 import {
   AddUserToTableSchema,
   DeleteUserFromTableSchema2,

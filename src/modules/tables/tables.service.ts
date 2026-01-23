@@ -33,22 +33,13 @@ export const getTable = async (
 export const createTable = async (
   user_id: number,
   data: CreateTableDTO,
-): Promise<(Table & { columns: Column[] }) | null> => {
+): Promise<Table | null> => {
   return prisma.$transaction(async (tx) => {
     const table = await tx.table.create({
       data: {
         name: data.name,
       },
     });
-
-    if (data.columns && data.columns.length > 0) {
-      await tx.column.createMany({
-        data: data.columns.map((col) => ({
-          data: col,
-          table_id: table.id,
-        })),
-      });
-    }
 
     await tx.userToTable.create({
       data: {
@@ -71,7 +62,7 @@ export const updateTable = async (
   user_id: number,
   table_id: number,
   data: UpdateTableDTO,
-): Promise<(Table & { columns: Column[]; users: { user: User }[] }) | null> => {
+): Promise<(Table & { users: { user: User }[] }) | null> => {
   return prisma.$transaction(async (tx) => {
     const existTable = await tx.table.findFirst({
       where: { id: table_id, users: { some: { user_id } } },
@@ -87,17 +78,6 @@ export const updateTable = async (
       },
     });
 
-    if (data.columns) {
-      await tx.column.deleteMany({ where: { table_id } });
-      if (data.columns.length > 0) {
-        await tx.column.createMany({
-          data: data.columns.map((col) => ({
-            data: col,
-            table_id,
-          })),
-        });
-      }
-    }
     return tx.table.findUnique({
       where: { id: table_id },
       include: {

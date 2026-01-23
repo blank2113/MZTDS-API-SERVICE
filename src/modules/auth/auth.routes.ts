@@ -9,7 +9,7 @@ import {
   getMeHandler,
 } from "./auth.controller.js";
 import { registerAuthOpenApi } from "./auth.openapi.js";
-import { validate } from "../../middleware/validate.moddleware.js";
+import { validate } from "../../middleware/validate.middleware.js";
 import {
   loginSchema,
   logoutFromSpecificSchema,

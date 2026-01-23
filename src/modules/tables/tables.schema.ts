@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const CreateTableSchema = z.object({
   name: z.string().min(4),
-  columns: z.array(z.object({ data: z.json() })).optional(),
 });
 
 export const TableIdParamSchema = z.object({
