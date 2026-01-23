@@ -17,17 +17,7 @@ export const CreateUserHandler = catchAsync(
 export const LoginUserHandler = catchAsync(
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
-    }
-
     const user = await login({ email, password });
-    if (!user?.id)
-      return res.status(401).json({ message: "Invalid credentials" });
-
     req.session.user_id = user.id;
     req.session.role = user.role;
     req.session.ip = req.ip;
@@ -84,14 +74,9 @@ export const LogoutUserHandler = catchAsync(
 export const LogoutSessionHandler = catchAsync(
   async (req: Request, res: Response) => {
     const userId = req.session.user_id;
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+    let sessionId = req.params.session_id;
 
-    let sessionId = req.params.sessionId;
-
-    // Приведение к строке
     if (Array.isArray(sessionId)) sessionId = sessionId[0];
-    if (!sessionId)
-      return res.status(400).json({ message: "Session ID required" });
 
     const sessionsKey = `user_sessions:${userId}`;
     const isMember = await redisClient.zScore(sessionsKey, sessionId);
@@ -136,7 +121,6 @@ export const LogoutAllHandler = catchAsync(
 export const GetSessionsHandler = catchAsync(
   async (req: Request, res: Response) => {
     const userId = req.session.user_id;
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
     const sessionsKey = `user_sessions:${userId}`;
     const sessionIds = await redisClient.zRange(sessionsKey, 0, -1);
@@ -154,8 +138,6 @@ export const GetSessionsHandler = catchAsync(
 
 export const getMeHandler = catchAsync(async (req: Request, res: Response) => {
   const userId = req.session.user_id;
-  if (!userId) return res.status(401).json({ message: "Unauthorized" });
-
   const user = await getMe(userId);
   res.status(200).json({ user });
 });

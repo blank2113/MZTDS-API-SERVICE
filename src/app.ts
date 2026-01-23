@@ -9,6 +9,7 @@ import bodyParser from "body-parser";
 import { redisClient } from "./redisClient.js";
 import { requireAuth } from "./middleware/auth.middleware.js";
 import { generateOpenApiDocument } from "./config/openapi.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 export const app = express();
 
@@ -35,7 +36,6 @@ app.use(`${process.env.PREFIX}`, routes);
 const openApiDocument = generateOpenApiDocument();
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
-// Health check
 app.get("/", requireAuth, (_, res: Response) => {
   res.status(200).json({ message: "Server is ok!!" });
 });
@@ -43,3 +43,5 @@ app.get("/", requireAuth, (_, res: Response) => {
 app.get("/health", requireAuth, (_, res: Response) => {
   res.status(200).json({ message: "Server is health!!" });
 });
+
+app.use(errorHandler);
