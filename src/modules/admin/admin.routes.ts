@@ -8,7 +8,7 @@ import {
 import { registerAdminOpenApi } from "./admin.openapi.js";
 import { requireAuth } from "../../middleware/auth.middleware.js";
 import { adminAuth } from "../../middleware/admin.middleware.js";
-import { validate } from "../../middleware/validate.moddleware.js";
+import { validate } from "../../middleware/validate.middleware.js";
 import {
   AdminSessionIdAndUserSchema,
   AdminSessionUserIdSchema,
