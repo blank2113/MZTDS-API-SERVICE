@@ -27,10 +27,10 @@ export const UpdateColumnHandler = catchAsync(
 );
 export const DeleteColumnHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const id = Number(req.params.id as string);
+    const id = Number(req.params.id);
     const result = await deleteColumn(id);
 
-    res.status(201).json({ message: `Column ${result.id} was deleted` });
+    res.status(201).json({ message: `Column ${result?.id} was deleted` });
   },
 );
 

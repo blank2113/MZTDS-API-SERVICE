@@ -122,9 +122,6 @@ describe("Users in Tables API (e2e)", () => {
         owner_id: owner.id,
       });
 
-    console.log(res.status);
-    console.log(res.body);
-
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("message", "User added successfully");
   });

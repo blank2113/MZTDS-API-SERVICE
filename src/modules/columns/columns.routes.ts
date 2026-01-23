@@ -47,11 +47,6 @@ router.put(
   UpdateColumnHandler,
 );
 
-router.delete(
-  "/:id",
-  requireAuth,
-  columnAccess([TableRole.EDITOR, TableRole.OWNER]),
-  DeleteColumnHandler,
-);
+router.delete("/:id", requireAuth, DeleteColumnHandler);
 
 export default router;

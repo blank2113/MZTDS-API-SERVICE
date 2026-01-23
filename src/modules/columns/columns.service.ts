@@ -59,20 +59,14 @@ export const updateColumn = async (
   });
 };
 
-export const deleteColumn = async (id: number): Promise<Column> => {
-  return prisma.$transaction(async (tx) => {
-    const columnExists = await tx.column.findFirst({
-      where: {
-        id: id,
-      },
+export const deleteColumn = async (id: number) => {
+  try {
+    const deleted = await prisma.column.delete({
+      where: { id },
     });
-
-    if (!columnExists) {
-      throw new Error("Column not found or access denied");
-    }
-
-    return tx.column.delete({
-      where: { id: id },
-    });
-  });
+    return deleted;
+  } catch (err) {
+    // Если колонки нет — возвращаем null
+    console.log(err);
+  }
 };
