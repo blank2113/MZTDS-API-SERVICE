@@ -1,6 +1,5 @@
 # MZTDS-API-SERVICE
 
-
 [![Node.js](https://img.shields.io/badge/node-%3E%3D22.x-brightgreen)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-%3E%3D5.x-blue)](https://www.typescriptlang.org/)
 [![Prisma](https://img.shields.io/badge/prisma-%3E%3D6.x-3333ff)](https://www.prisma.io/)
@@ -35,13 +34,13 @@ MZTDS-API-SERVICE — это backend-сервис на **Node.js + TypeScript**,
 
 ## 🛠 Технологии
 
-- Node.js 22.x  
-- TypeScript 5.x  
-- Express.js 5.x  
-- Prisma 6.x  
-- PostgreSQL 15  
-- Redis 7  
-- GitHub Actions (CI/CD)  
+- Node.js 22.x
+- TypeScript 5.x
+- Express.js 5.x
+- Prisma 7.x
+- PostgreSQL 17
+- Redis 7
+- GitHub Actions (CI/CD)
 - ESLint + Prettier + Vitest
 
 ---
@@ -53,3 +52,4 @@ MZTDS-API-SERVICE — это backend-сервис на **Node.js + TypeScript**,
 ```bash
 git clone git@github.com:blank2113/MZTDS-API-SERVICE.git
 cd MZTDS-API-SERVICE
+```
