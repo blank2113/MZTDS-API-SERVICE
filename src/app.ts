@@ -29,7 +29,7 @@ app.use(
 
 app.use(compression());
 app.use(express.json({ limit: "20mb" }));
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(`${process.env.PREFIX}`, routes);
 const openApiDocument = generateOpenApiDocument();
