@@ -33,7 +33,18 @@ app.use(cors({ origin: "*" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(`${process.env.PREFIX}`, routes);
 const openApiDocument = generateOpenApiDocument();
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(openApiDocument, {
+    swaggerOptions: {
+      requestInterceptor: (request: { credentials: string }) => {
+        request.credentials = "include";
+        return request;
+      },
+    },
+  }),
+);
 
 app.get("/", requireAuth, (_, res: Response) => {
   res.status(200).json({ message: "Server is ok!!" });
