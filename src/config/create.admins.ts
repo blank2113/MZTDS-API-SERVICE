@@ -10,7 +10,7 @@ export const createAdmin = async () => {
     },
     update: {}, // можно оставить пустым
     create: {
-      name: "Admin",
+      name: "Admin1",
       email: "admin@admin.com",
       password: passwordHash,
       role: "ADMIN",
