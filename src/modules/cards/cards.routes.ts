@@ -10,22 +10,33 @@ import {
 import { validate } from "../../middleware/validate.middleware.js";
 import { CreateCardSchema, UpdateCardSchema } from "./cards.schema.js";
 import { registerCardsOpenApi } from "./cards.openapi.js";
-import { columnAccess } from "../../middleware/columnRole.middleware.js";
 import { TableRole } from "../../generated/prisma/enums.js";
-import { cardAccess } from "../../middleware/cardAccess.middleware.js";
+import {
+  accessByTable,
+  resolveTableFromCard,
+  resolveTableFromColumn,
+} from "../../middleware/accessByTable.middleware.js";
 
 const router = Router();
 registerCardsOpenApi();
 
 router.get(
   "/:column_id",
-  columnAccess([TableRole.EDITOR, TableRole.OWNER, TableRole.VIEWER]),
+  accessByTable(resolveTableFromColumn, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   requireAuth,
   GetCardsHandler,
 );
 router.get(
   "/:column_id/:id",
-  columnAccess([TableRole.EDITOR, TableRole.OWNER, TableRole.VIEWER]),
+  accessByTable(resolveTableFromColumn, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   requireAuth,
   GetCardHandler,
 );
@@ -33,7 +44,11 @@ router.get(
 router.post(
   "/:column_id",
   requireAuth,
-  columnAccess([TableRole.EDITOR, TableRole.OWNER, TableRole.VIEWER]),
+  accessByTable(resolveTableFromColumn, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   validate(CreateCardSchema, "body"),
   CreateCardHandler,
 );
@@ -41,7 +56,11 @@ router.post(
 router.put(
   "/:id",
   requireAuth,
-  cardAccess([TableRole.EDITOR, TableRole.OWNER]),
+  accessByTable(resolveTableFromCard, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   validate(UpdateCardSchema, "body"),
   UpdateCardHandler,
 );
@@ -49,7 +68,11 @@ router.put(
 router.delete(
   "/:id",
   requireAuth,
-  cardAccess([TableRole.EDITOR, TableRole.OWNER]),
+  accessByTable(resolveTableFromCard, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   DeleteCardHandler,
 );
 

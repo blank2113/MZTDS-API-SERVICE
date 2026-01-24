@@ -1,3 +1,5 @@
+import type { Request } from "express";
+
 export class ApiError extends Error {
   statusCode: number;
   constructor(message: string, statusCode = 500) {
@@ -19,3 +21,5 @@ export class AppError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
+
+export type ResourceResolver = (req: Request) => Promise<number | string>;

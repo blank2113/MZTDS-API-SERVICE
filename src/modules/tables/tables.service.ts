@@ -1,4 +1,9 @@
-import { Column, Table, User } from "../../generated/prisma/client.js";
+import {
+  Column,
+  Table,
+  TableRole,
+  User,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import { ApiError } from "../../types/common.js";
 import { CreateTableDTO, UpdateTableDTO } from "./tables.schema.js";
@@ -33,7 +38,7 @@ export const getTable = async (
 export const createTable = async (
   user_id: number,
   data: CreateTableDTO,
-): Promise<Table | null> => {
+): Promise<Table> => {
   return prisma.$transaction(async (tx) => {
     const table = await tx.table.create({
       data: {
@@ -45,16 +50,11 @@ export const createTable = async (
       data: {
         user_id: user_id,
         table_id: table.id,
-        role: "OWNER",
+        role: TableRole.OWNER,
       },
     });
 
-    return tx.table.findUnique({
-      where: { id: table.id },
-      include: {
-        columns: true,
-      },
-    });
+    return table;
   });
 };
 

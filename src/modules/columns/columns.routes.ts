@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { requireAuth } from "../../middleware/auth.middleware.js";
-import { tableAccess } from "../../middleware/tableRole.middleware.js";
 import { TableRole } from "../../generated/prisma/enums.js";
 import {
   CreateColumnHandler,
@@ -12,7 +11,11 @@ import {
 import { validate } from "../../middleware/validate.middleware.js";
 import { CreateColumnSchema, UpdateColumnSchema } from "./columns.schema.js";
 import { registerColumnsOpenApi } from "./columns.openapi.js";
-import { columnAccess } from "../../middleware/columnRole.middleware.js";
+import {
+  accessByTable,
+  resolveTableFromColumn,
+  resolveTableFromTable,
+} from "../../middleware/accessByTable.middleware.js";
 
 const router = Router();
 registerColumnsOpenApi();
@@ -20,21 +23,29 @@ registerColumnsOpenApi();
 router.get(
   "/:table_id",
   requireAuth,
-  tableAccess([TableRole.EDITOR, TableRole.OWNER, TableRole.VIEWER]),
+  accessByTable(resolveTableFromTable, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   GetColumnsHandler,
 );
 
 router.get(
   "/:table_id/:id",
   requireAuth,
-  tableAccess([TableRole.EDITOR, TableRole.OWNER, TableRole.VIEWER]),
+  accessByTable(resolveTableFromTable, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   GetColumnHandler,
 );
 
 router.post(
   "/:table_id",
   requireAuth,
-  tableAccess([TableRole.EDITOR, TableRole.OWNER]),
+  accessByTable(resolveTableFromTable, [TableRole.OWNER, TableRole.EDITOR]),
   validate(CreateColumnSchema, "body"),
   CreateColumnHandler,
 );
@@ -42,11 +53,16 @@ router.post(
 router.put(
   "/:id",
   requireAuth,
-  columnAccess([TableRole.EDITOR, TableRole.OWNER]),
+  accessByTable(resolveTableFromColumn, [TableRole.OWNER, TableRole.EDITOR]),
   validate(UpdateColumnSchema, "body"),
   UpdateColumnHandler,
 );
 
-router.delete("/:id", requireAuth, DeleteColumnHandler);
+router.delete(
+  "/:id",
+  requireAuth,
+  accessByTable(resolveTableFromColumn, [TableRole.OWNER, TableRole.EDITOR]),
+  DeleteColumnHandler,
+);
 
 export default router;

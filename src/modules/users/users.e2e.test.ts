@@ -130,6 +130,7 @@ describe("Users in Tables API (e2e)", () => {
     const res = await request(app)
       .delete(`/api/v1/users/${table.id}/${owner.id}/${viewer.id}`)
       .set("Cookie", ownerCookie);
+    console.log(res.error);
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("message", "User removed from table");

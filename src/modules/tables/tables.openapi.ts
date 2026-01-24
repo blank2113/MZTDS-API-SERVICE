@@ -108,14 +108,6 @@ export function registerTablesOpenApi() {
                   type: "string",
                   example: "name of table",
                 },
-                columns: {
-                  type: "array",
-                  items: {
-                    properties: {
-                      data: { type: "string" },
-                    },
-                  },
-                },
               },
             },
           },
