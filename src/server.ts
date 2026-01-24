@@ -1,4 +1,5 @@
 import { app } from "./app.js";
+import { createAdmin } from "./config/create.admins.js";
 import { prisma } from "./lib/prisma.js";
 import { redisClient } from "./redisClient.js";
 
@@ -16,6 +17,8 @@ async function main() {
     const server = app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
+
+    createAdmin();
 
     server.on("error", (err) => {
       console.error("❌ Server failed to start:", err);
