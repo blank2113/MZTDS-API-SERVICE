@@ -5,7 +5,6 @@ import { RedisStore } from "connect-redis";
 import swaggerUi from "swagger-ui-express";
 import session from "express-session";
 import routes from "./routes.js";
-import bodyParser from "body-parser";
 import { redisClient } from "./redisClient.js";
 import { requireAuth } from "./middleware/auth.middleware.js";
 import { generateOpenApiDocument } from "./config/openapi.js";
@@ -29,9 +28,8 @@ app.use(
 );
 
 app.use(compression());
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "20mb" }));
 app.use(cors({ origin: "*" }));
-app.use(bodyParser.json({ limit: "20mb" }));
 app.use(`${process.env.PREFIX}`, routes);
 const openApiDocument = generateOpenApiDocument();
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
