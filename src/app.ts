@@ -11,7 +11,7 @@ import { generateOpenApiDocument } from "./config/openapi.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 export const app = express();
-
+app.set("trust proxy", 1);
 app.use(
   session({
     store: new RedisStore({ client: redisClient }),
