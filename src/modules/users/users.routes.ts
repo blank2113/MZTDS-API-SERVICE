@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { tableAccess } from "../../middleware/tableRole.middleware.js";
+
 import { TableRole } from "../../generated/prisma/enums.js";
 import {
   AddUserToTableHandler,
@@ -17,6 +17,10 @@ import {
   GetTablesUserSchema,
   GetTableUserSchema2,
 } from "./users.schema.js";
+import {
+  accessByTable,
+  resolveTableFromTable,
+} from "../../middleware/accessByTable.middleware.js";
 
 const router = Router();
 registerUsersOpenApi();
@@ -24,7 +28,11 @@ registerUsersOpenApi();
 router.get(
   "/:table_id",
   requireAuth,
-  tableAccess([TableRole.OWNER, TableRole.EDITOR, TableRole.VIEWER]),
+  accessByTable(resolveTableFromTable, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   validate(GetTablesUserSchema, "params"),
   GetTableUsersHandler,
 );
@@ -32,7 +40,11 @@ router.get(
 router.get(
   "/:table_id/:user_id",
   requireAuth,
-  tableAccess([TableRole.OWNER, TableRole.EDITOR, TableRole.VIEWER]),
+  accessByTable(resolveTableFromTable, [
+    TableRole.OWNER,
+    TableRole.EDITOR,
+    TableRole.VIEWER,
+  ]),
   validate(GetTableUserSchema2, "params"),
   GetTableUserHandler,
 );
@@ -40,7 +52,7 @@ router.get(
 router.post(
   "/",
   requireAuth,
-  tableAccess([TableRole.OWNER, TableRole.EDITOR]),
+  accessByTable(resolveTableFromTable, [TableRole.OWNER, TableRole.EDITOR]),
   validate(AddUserToTableSchema, "body"),
   AddUserToTableHandler,
 );
@@ -48,11 +60,16 @@ router.post(
 router.delete(
   "/:table_id/:owner_id/:user_id",
   requireAuth,
-  tableAccess([TableRole.OWNER]),
+  accessByTable(resolveTableFromTable, [TableRole.OWNER, TableRole.EDITOR]),
   validate(DeleteUserFromTableSchema2, "params"),
   DeleteUserFromTableHandler,
 );
 
-router.post("/", requireAuth, CreateTableHandler);
+router.post(
+  "/",
+  accessByTable(resolveTableFromTable, [TableRole.OWNER, TableRole.EDITOR]),
+  requireAuth,
+  CreateTableHandler,
+);
 
 export default router;
