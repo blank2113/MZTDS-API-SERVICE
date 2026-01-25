@@ -27,9 +27,26 @@ app.use(
   }),
 );
 
+const allowedOrigins = [
+  "https://workflow-frontend.example.com", // твой фронтенд
+  "https://api-workflow.minzifatravel.com", // swagger ui, если на том же домене
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // Postman, curl
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // чтобы cookie проходили
+  }),
+);
 app.use(compression());
 app.use(express.json({ limit: "20mb" }));
-app.use(cors({ origin: "*", credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(`${process.env.PREFIX}`, routes);
 const openApiDocument = generateOpenApiDocument();
