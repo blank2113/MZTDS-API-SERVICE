@@ -20,9 +20,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       maxAge: 1000 * 60 * 60 * 24, // 1 день
-      sameSite: "lax",
+      sameSite: "none",
     },
   }),
 );
@@ -48,10 +48,6 @@ app.use(
 
 app.get("/", requireAuth, (_, res: Response) => {
   res.status(200).json({ message: "Server is ok!!" });
-});
-
-app.get("/health", requireAuth, (_, res: Response) => {
-  res.status(200).json({ message: "Server is health!!" });
 });
 
 app.use(errorHandler);
