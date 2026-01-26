@@ -27,21 +27,22 @@ app.use(
   }),
 );
 
-const allowedOrigins = [
-  "https://workflow-frontend.example.com", // твой фронтенд
-  "https://api-workflow.minzifatravel.com", // swagger ui, если на том же домене
-];
+// const allowedOrigins = [
+//   "https://workflow-frontend.example.com", // твой фронтенд
+//   "https://api-workflow.minzifatravel.com", // swagger ui, если на том же домене
+// ];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    // origin: (origin, callback) => {
+    //   if (!origin) return callback(null, true);
+    //   if (allowedOrigins.includes(origin)) {
+    //     callback(null, true);
+    //   } else {
+    //     callback(new Error("Not allowed by CORS"));
+    //   }
+    // },
+    origin: "*",
     credentials: true, // чтобы cookie проходили
   }),
 );
