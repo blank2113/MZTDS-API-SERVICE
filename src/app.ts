@@ -27,10 +27,10 @@ app.use(
   }),
 );
 
-const allowedOrigins = [
-  "https://workflow-frontend.example.com", // твой фронтенд
-  "https://api-workflow.minzifatravel.com", // swagger ui, если на том же домене
-];
+// const allowedOrigins = [
+//   "https://workflow-frontend.example.com", // твой фронтенд
+//   "https://api-workflow.minzifatravel.com", // swagger ui, если на том же домене
+// ];
 
 app.use(
   cors({
