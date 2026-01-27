@@ -34,9 +34,7 @@ export const mailingWorker = new Worker(
     }
   },
   {
-    connection: {
-      sendCommand: (...args: any) => redisClient.sendCommand(args),
-    } as any,
+    connection: redisClient,
     concurrency: 5,
     limiter: { max: 20, duration: 1000 },
   },

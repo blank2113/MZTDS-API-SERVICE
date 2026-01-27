@@ -2,9 +2,7 @@ import { Queue } from "bullmq";
 import { redisClient } from "../redisClient.js";
 
 export const mailingQueue = new Queue("mailing", {
-  connection: {
-    sendCommand: (...args: any) => redisClient.sendCommand(args),
-  } as any,
+  connection: redisClient,
 });
 
 export async function cleanQueue() {
