@@ -143,4 +143,13 @@ describe("Users in Tables API (e2e)", () => {
 
     expect([401, 403]).toContain(res.status); // зависит от реализации
   });
+
+  it("Get all users in a system", async () => {
+    const res = await request(app)
+      .get(`/api/v1/users/`)
+      .set("Cookie", ownerCookie);
+
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+  });
 });
