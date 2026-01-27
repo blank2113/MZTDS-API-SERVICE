@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/helper.js";
 import {
   addUserToTable,
   deleteUserFromTable,
+  getAllUserExpectAdmins,
   getTableUser,
   getTableUsers,
 } from "./users.service.js";
@@ -38,5 +39,13 @@ export const DeleteUserFromTableHandler = catchAsync(
     const owner_id = Number(req.params.owner_id);
     const result = await deleteUserFromTable({ table_id, user_id, owner_id });
     res.status(200).json(result);
+  },
+);
+
+export const GetAllUserInSystemHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const user_id = Number(req.session.user_id);
+    const users = await getAllUserExpectAdmins(user_id);
+    res.status(200).json(users);
   },
 );

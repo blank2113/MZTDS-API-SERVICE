@@ -1,3 +1,4 @@
+import { User } from "../../generated/prisma/client.js";
 import { TableRole } from "../../generated/prisma/enums.js";
 import { prisma } from "../../lib/prisma.js";
 import { ApiError } from "../../types/common.js";
@@ -111,4 +112,18 @@ export const getTableUsers = async (table_id: number) => {
     role: u.role,
     addedAt: u.created_at,
   }));
+};
+
+export const getAllUserExpectAdmins = async (
+  user_id: number,
+): Promise<User[]> => {
+  return prisma.$transaction(async (ts) => {
+    const users = await ts.user.findMany({
+      where: {
+        NOT: { id: user_id },
+        role: "USER",
+      },
+    });
+    return users;
+  });
 };
