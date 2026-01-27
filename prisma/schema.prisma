@@ -20,13 +20,15 @@ enum TableRole {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  name       String   @unique
-  email      String   @unique
-  password   String
-  role       Roles    @default(USER)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  email        String   @unique
+  password     String
+  telegram_id  String?
+  notification Boolean  @default(false)
+  role         Roles    @default(USER)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 
   tables UserToTable[]
 
@@ -84,4 +86,15 @@ model Card {
 model AuditLog {
   id   Int  @id @default(autoincrement())
   data Json
+}
+
+model TgLinkToken {
+  token     String   @id
+  email     String
+  used      Boolean  @default(false)
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([email])
 }
