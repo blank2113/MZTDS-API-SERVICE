@@ -1,6 +1,6 @@
 import { Queue } from "bullmq";
 
-const redisOptions = {
+export const redisOptions = {
   host: process.env.REDIS_HOST || "localhost",
   port: Number(process.env.REDIS_PORT) || 6379,
   username: process.env.REDIS_USERNAME || undefined || "default",
