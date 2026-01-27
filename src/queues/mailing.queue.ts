@@ -1,10 +1,14 @@
 import { Queue } from "bullmq";
-import { redisClient } from "../redisClient.js";
+
+const redisOptions = {
+  host: process.env.REDIS_HOST || "localhost",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  username: process.env.REDIS_USERNAME || undefined || "default",
+  password: process.env.REDIS_PASS || undefined,
+};
 
 export const mailingQueue = new Queue("mailing", {
-  connection: {
-    sendCommand: (...args: any) => redisClient.sendCommand(args),
-  } as any,
+  connection: redisOptions, // ✅ тип ConnectionOptions
 });
 
 export async function cleanQueue() {

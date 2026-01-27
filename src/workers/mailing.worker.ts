@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Worker } from "bullmq";
 import { prisma } from "../lib/prisma.js";
 import { bot } from "../bot/bot.service.js";
-import { redisClient } from "../redisClient.js";
 
 export const mailingWorker = new Worker(
   "mailing",
@@ -34,9 +34,8 @@ export const mailingWorker = new Worker(
     }
   },
   {
-    connection: {
-      sendCommand: (...args: any) => redisClient.sendCommand(args),
-    } as any,
+    // @ts-expect-error
+    connection: process.env.REDIS_URL,
     concurrency: 5,
     limiter: { max: 20, duration: 1000 },
   },
