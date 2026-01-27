@@ -3,8 +3,9 @@ import { startBot } from "./bot/bot.service.js";
 import { createAdmin } from "./config/create.admins.js";
 import { prisma } from "./lib/prisma.js";
 import { cleanQueue } from "./queues/mailing.queue.js";
+import { mailingWorker } from "./queues/mailing.worker.js";
+
 import { redisClient } from "./redisClient.js";
-import { mailingWorker } from "./workers/mailing.worker.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -23,12 +24,12 @@ async function main() {
     console.log("🧹 Mailing queue cleaned");
 
     // Запуск воркера
-    mailingWorker.on("completed", (job) => {
-      console.log(`✅ Message sent to ${job.data.telegram_id}`);
+    mailingWorker.on("completed", () => {
+      console.log(`✅ Message sent`);
     });
 
-    mailingWorker.on("failed", (job, err) => {
-      console.error(`❌ Failed job for ${job?.data.telegram_id}:`, err);
+    mailingWorker.on("failed", () => {
+      console.error(`❌ Failed job`);
     });
 
     // Запуск Express
