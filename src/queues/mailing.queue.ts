@@ -1,10 +1,14 @@
 import { Queue } from "bullmq";
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { redisClient } from "../redisClient.js";
+
+const redisOptions = {
+  host: process.env.REDIS_HOST || "localhost",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  username: process.env.REDIS_USERNAME || undefined || "default",
+  password: process.env.REDIS_PASS || undefined,
+};
 
 export const mailingQueue = new Queue("mailing", {
-  // @ts-expect-error
-  connection: redisClient,
+  connection: redisOptions, // ✅ тип ConnectionOptions
 });
 
 export async function cleanQueue() {
