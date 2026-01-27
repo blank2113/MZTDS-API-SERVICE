@@ -39,7 +39,6 @@ export const createColumn = async (
 
 export const updateColumn = async (
   id: number,
-
   data: CreateColumnDTO,
 ): Promise<Column | null> => {
   return prisma.$transaction(async (tx) => {

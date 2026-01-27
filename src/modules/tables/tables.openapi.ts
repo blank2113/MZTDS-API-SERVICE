@@ -148,6 +148,67 @@ export function registerTablesOpenApi() {
     },
   });
   registry.registerPath({
+    method: "put",
+    path: `${prefix}/tables/{table_id}`,
+    tags: ["Tables"],
+    summary: "Update user table",
+    description: "Update user table",
+    parameters: [{ name: "table_id", in: "path", required: true }],
+    request: {
+      body: {
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                name: {
+                  type: "string",
+                  example: "name of table",
+                },
+                owner_id: { type: "number" },
+              },
+            },
+          },
+        },
+        required: true,
+      },
+    },
+    responses: {
+      200: {
+        description: "User in table",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                name: {
+                  type: "string",
+                  example: "name of table",
+                },
+                owner_id: {
+                  type: "number",
+                },
+                columns: {
+                  type: "array",
+                  items: {
+                    properties: {
+                      id: { type: "number" },
+                      data: { type: "string" },
+                      table_id: { type: "number" },
+                      updated_at: { type: "string" },
+                      created_at: { type: "string" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      401: { description: "Unauthorized" },
+    },
+  });
+  registry.registerPath({
     method: "delete",
     path: `${prefix}/tables/{table_id}`,
     tags: ["Tables"],

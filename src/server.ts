@@ -1,5 +1,5 @@
 import { app } from "./app.js";
-import { startBot } from "./bot/bot.service.js";
+// import { startBot } from "./bot/bot.service.js";
 import { createAdmin } from "./config/create.admins.js";
 import { prisma } from "./lib/prisma.js";
 import { redisClient } from "./redisClient.js";
@@ -39,9 +39,9 @@ async function main() {
 
 main();
 
-startBot()
-  .then(() => console.log("✅ Bot started"))
-  .catch((err) => {
-    console.error("❌ Bot failed to start:", err);
-    process.exit(1); // можно решать, что делать при падении бота
-  });
+// startBot()
+//   .then(() => console.log("✅ Bot started"))
+//   .catch((err) => {
+//     console.error("❌ Bot failed to start:", err);
+//     process.exit(1); // можно решать, что делать при падении бота
+//   });
