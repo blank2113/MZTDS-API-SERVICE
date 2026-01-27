@@ -2,9 +2,8 @@ import { app } from "./app.js";
 import { startBot } from "./bot/bot.service.js";
 import { createAdmin } from "./config/create.admins.js";
 import { prisma } from "./lib/prisma.js";
-import { cleanQueue } from "./queues/mailing.queue.js";
+import { cleanQueue, mailingWorker } from "./queues/mailing.queue.js";
 import { redisClient } from "./redisClient.js";
-import { mailingWorker } from "./workers/mailing.worker.js";
 
 const PORT = process.env.PORT || 3000;
 
