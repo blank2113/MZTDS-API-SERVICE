@@ -36,6 +36,7 @@ export const mailingWorker = new Worker(
   {
     // @ts-expect-error
     connection: process.env.REDIS_URL,
+
     concurrency: 5,
     limiter: { max: 20, duration: 1000 },
   },
