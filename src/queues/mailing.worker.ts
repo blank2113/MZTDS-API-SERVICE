@@ -34,6 +34,7 @@ export const mailingWorker = new Worker(
   },
   {
     connection: redisOptions,
+
     concurrency: 5,
     limiter: { max: 20, duration: 1000 },
   },
