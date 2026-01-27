@@ -7,3 +7,14 @@ export type UserToTableSchema = {
   created_at: Date;
   updated_at: Date;
 } | null;
+
+import { Prisma } from "../../generated/prisma/client.js";
+
+export type UsersData = Prisma.UserGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    email: true;
+    role: true;
+  };
+}>;

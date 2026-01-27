@@ -1,4 +1,3 @@
-import { User } from "../../generated/prisma/client.js";
 import { TableRole } from "../../generated/prisma/enums.js";
 import { prisma } from "../../lib/prisma.js";
 import { ApiError } from "../../types/common.js";
@@ -8,6 +7,7 @@ import {
   DeleteUserFromTableDTO,
   GetTableUserDTO,
 } from "./users.schema.js";
+import { UsersData } from "./users.types.js";
 
 export const addUserToTable = async (dto: AddUserToTableDTO) => {
   return prisma.$transaction(async (tx) => {
@@ -116,12 +116,18 @@ export const getTableUsers = async (table_id: number) => {
 
 export const getAllUserExpectAdmins = async (
   user_id: number,
-): Promise<User[]> => {
+): Promise<UsersData[]> => {
   return prisma.$transaction(async (ts) => {
     const users = await ts.user.findMany({
       where: {
         NOT: { id: user_id },
         role: "USER",
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
       },
     });
     return users;

@@ -27,22 +27,22 @@ app.use(
   }),
 );
 
-// const allowedOrigins = [
-//   "https://workflow.minzifatravel.com",
-//   "https://api-workflow.minzifatravel.com",
-// ];
+const allowedOrigins = [
+  "https://workflow.minzifatravel.com",
+  "https://api-workflow.minzifatravel.com",
+];
 
 app.use(
   cors({
-    // origin: (origin, callback) => {
-    //   if (!origin) return callback(null, true);
-    //   if (allowedOrigins.includes(origin)) {
-    //     callback(null, true);
-    //   } else {
-    //     callback(new Error("Not allowed by CORS"));
-    //   }
-    // },
-    origin: "*",
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    // origin: "*",
     credentials: true, // чтобы cookie проходили
   }),
 );
