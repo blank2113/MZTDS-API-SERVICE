@@ -163,6 +163,7 @@ export function registerCardsOpenApi() {
                 data: {
                   type: "object",
                 },
+                column_id: { type: "number" },
               },
             },
           },
@@ -178,9 +179,9 @@ export function registerCardsOpenApi() {
             schema: {
               type: "object",
               properties: {
-                column_id: { type: "number" },
                 id: { type: "number" },
                 data: { type: "object" },
+                column_id: { type: "number" },
                 updated_at: { type: "string" },
                 created_at: { type: "string" },
               },

@@ -34,13 +34,13 @@ model User {
 }
 
 model Table {
-  id         Int      @id @default(autoincrement())
+  id         Int           @id @default(autoincrement())
   name       String
   columns    Column[]
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  users UserToTable[]
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+  owner_id   Int?
+  users      UserToTable[]
 
   @@index([name])
 }
