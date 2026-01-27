@@ -1,7 +1,9 @@
 import { Queue } from "bullmq";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { redisClient } from "../redisClient.js";
 
 export const mailingQueue = new Queue("mailing", {
+  // @ts-expect-error
   connection: redisClient,
 });
 

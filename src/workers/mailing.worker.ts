@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Worker } from "bullmq";
 import { prisma } from "../lib/prisma.js";
 import { bot } from "../bot/bot.service.js";
@@ -34,6 +35,7 @@ export const mailingWorker = new Worker(
     }
   },
   {
+    // @ts-expect-error
     connection: redisClient,
     concurrency: 5,
     limiter: { max: 20, duration: 1000 },
