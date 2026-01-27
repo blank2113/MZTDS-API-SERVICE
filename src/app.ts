@@ -27,10 +27,10 @@ app.use(
   }),
 );
 
-const allowedOrigins = [
-  "https://workflow.minzifatravel.com",
-  "https://api-workflow.minzifatravel.com",
-];
+// const allowedOrigins = [
+//   "https://workflow.minzifatravel.com",
+//   "https://api-workflow.minzifatravel.com",
+// ];
 
 app.use(
   cors({
@@ -42,6 +42,7 @@ app.use(
     //     callback(new Error("Not allowed by CORS"));
     //   }
     // },
+    origin: "*",
     credentials: true, // чтобы cookie проходили
   }),
 );
