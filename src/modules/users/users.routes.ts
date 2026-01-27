@@ -4,6 +4,7 @@ import { TableRole } from "../../generated/prisma/enums.js";
 import {
   AddUserToTableHandler,
   DeleteUserFromTableHandler,
+  GetAllUserInSystemHandler,
   GetTableUserHandler,
   GetTableUsersHandler,
 } from "./users.controller.js";
@@ -71,5 +72,7 @@ router.post(
   requireAuth,
   CreateTableHandler,
 );
+
+router.get("/", requireAuth, GetAllUserInSystemHandler);
 
 export default router;

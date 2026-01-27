@@ -49,6 +49,41 @@ export function registerUsersOpenApi() {
   });
   registry.registerPath({
     method: "get",
+    path: `${prefix}/users/`,
+    tags: ["Users"],
+    summary: "Get all users in  the system",
+    description: "Returns all users in the system",
+    responses: {
+      200: {
+        description: "All users in the system",
+        content: {
+          "application/json": {
+            schema: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  user: {
+                    type: "object",
+                    properties: {
+                      id: { type: "number" },
+                      name: { type: "string" },
+                      email: { type: "string" },
+                    },
+                  },
+                  role: { type: "string", example: "VIEWER" },
+                  addedAt: { type: "string" },
+                },
+              },
+            },
+          },
+        },
+      },
+      401: { description: "Unauthorized" },
+    },
+  });
+  registry.registerPath({
+    method: "get",
     path: `${prefix}/users/{table_id}/{user_id}`,
     tags: ["User in Table"],
     summary: "Get user in table",
