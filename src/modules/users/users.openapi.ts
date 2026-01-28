@@ -130,50 +130,50 @@ export function registerUsersOpenApi() {
       401: { description: "Unauthorized" },
     },
   });
-  registry.registerPath({
-    method: "post",
-    path: `${prefix}/users/`,
-    tags: ["User in Table"],
-    summary: "Add user in table",
-    description: "Add user in this table",
-    request: {
-      body: {
-        content: {
-          "application/json": {
-            schema: {
-              type: "object",
-              properties: {
-                table_id: { type: "number", example: "1" },
-                user_id: { type: "number", example: "2" },
-                owner_id: { type: "number", example: "1" },
-                role: { type: "string", example: "VIEWER" },
-              },
-            },
-          },
-        },
-      },
-    },
-    responses: {
-      200: {
-        description: "User in table",
-        content: {
-          "application/json": {
-            schema: {
-              type: "object",
-              properties: {
-                table_id: { type: "number", example: 1 },
-                user_id: { type: "number", example: 1 },
-                role: { type: "string", example: "VIWER" },
-                created_at: { type: "string", example: "" },
-                updated_at: { type: "string", example: "" },
-              },
-            },
-          },
-        },
-      },
-      401: { description: "Unauthorized" },
-    },
-  });
+  // registry.registerPath({
+  //   method: "post",
+  //   path: `${prefix}/users/`,
+  //   tags: ["User in Table"],
+  //   summary: "Add user in table",
+  //   description: "Add user in this table",
+  //   request: {
+  //     body: {
+  //       content: {
+  //         "application/json": {
+  //           schema: {
+  //             type: "object",
+  //             properties: {
+  //               table_id: { type: "number", example: "1" },
+  //               user_id: { type: "number", example: "2" },
+  //               owner_id: { type: "number", example: "1" },
+  //               role: { type: "string", example: "VIEWER" },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  //   responses: {
+  //     200: {
+  //       description: "User in table",
+  //       content: {
+  //         "application/json": {
+  //           schema: {
+  //             type: "object",
+  //             properties: {
+  //               table_id: { type: "number", example: 1 },
+  //               user_id: { type: "number", example: 1 },
+  //               role: { type: "string", example: "VIWER" },
+  //               created_at: { type: "string", example: "" },
+  //               updated_at: { type: "string", example: "" },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //     401: { description: "Unauthorized" },
+  //   },
+  // });
   registry.registerPath({
     method: "delete",
     path: `${prefix}/users/{table_id}/{owner_id}/{user_id}`,
