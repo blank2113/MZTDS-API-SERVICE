@@ -91,7 +91,7 @@ describe("Tables API (e2e)", () => {
     expect(res.status).toBe(201);
     expect(res.body.name).toMatch(/Updated Table/);
   });
-
+  // asd
   it("should delete the table", async () => {
     const res = await request(app)
       .delete(`/api/v1/tables/${tableId}`)

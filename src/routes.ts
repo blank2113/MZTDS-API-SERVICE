@@ -8,6 +8,8 @@ import CardsRoutes from "./modules/cards/cards.routes.js";
 import ProfileRoutes from "./modules/profile/profile.routes.js";
 import TgLinkRoutes from "./modules/TgLink/TgLink.routes.js";
 import NotificationRoutes from "./modules/notification/notification.routes.js";
+import PushNotificationRoutes from "./modules/push-notification/push.routes.js";
+import InviteRoutes from "./modules/invite/invite.routes.js";
 
 const router = Router();
 
@@ -20,5 +22,7 @@ router.use("/cards", CardsRoutes);
 router.use("/profile", ProfileRoutes);
 router.use("/tg_link", TgLinkRoutes);
 router.use("/notification", NotificationRoutes);
+router.use("/fcm", PushNotificationRoutes);
+router.use("/invite", InviteRoutes);
 
 export default router;

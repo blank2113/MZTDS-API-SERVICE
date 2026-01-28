@@ -8,5 +8,6 @@ export default defineConfig({
     sequence: {
       concurrent: false,
     },
+    setupFiles: ["./src/test/setup-firebase-mock.ts"],
   },
 });
