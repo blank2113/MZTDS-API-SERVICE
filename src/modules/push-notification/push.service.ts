@@ -1,4 +1,4 @@
-import { admin } from "../../config/firebase.js";
+import { firebaseAdmin } from "../../config/firebase.js";
 import { prisma } from "../../lib/prisma.js";
 
 type SendToUserPayload = {
@@ -40,6 +40,8 @@ export const sendToToken = async (
   },
 ) => {
   try {
+    const admin = firebaseAdmin();
+
     await admin.messaging().send({
       token,
       notification: {

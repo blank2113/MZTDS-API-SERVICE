@@ -1,11 +1,22 @@
 import admin from "firebase-admin";
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT! || "");
+let firebaseApp: admin.app.App | null = null;
 
-if (!admin.apps.length) {
-  admin.initializeApp({
+export function firebaseAdmin() {
+  if (firebaseApp) return firebaseApp;
+
+  const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
+
+  if (!raw) {
+    // 💡 ВАЖНО: в тестах и CI просто не поднимаем Firebase
+    throw new Error("FIREBASE_SERVICE_ACCOUNT is not set");
+  }
+
+  const serviceAccount = JSON.parse(raw);
+
+  firebaseApp = admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
-}
 
-export { admin };
+  return firebaseApp;
+}
