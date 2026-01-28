@@ -19,20 +19,37 @@ enum TableRole {
   VIEWER
 }
 
+enum InviteStatus {
+  pending
+  accepted
+  declined
+}
+
 model User {
-  id           Int      @id @default(autoincrement())
-  name         String   @unique
-  email        String   @unique
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  email        String         @unique
   password     String
   telegram_id  String?
-  notification Boolean  @default(false)
-  role         Roles    @default(USER)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-
-  tables UserToTable[]
+  notification Boolean        @default(false)
+  role         Roles          @default(USER)
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  fcn_tokens   UserFcmToken[]
+  tables       UserToTable[]
+  tableInvites TableInvite[]
 
   @@index([name, email])
+}
+
+model UserFcmToken {
+  id        Int           @id @default(autoincrement())
+  user_id   Int
+  token     String        @unique
+  platform  String
+  createdAt DateTime      @default(now())
+  invite    TableInvite[]
+  user      User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Table {
@@ -43,8 +60,23 @@ model Table {
   updated_at DateTime      @updatedAt
   owner_id   Int?
   users      UserToTable[]
+  invite     TableInvite[]
 
   @@index([name])
+}
+
+model TableInvite {
+  id        Int          @id @default(autoincrement())
+  table_id  Int
+  user_id   Int // тот, кого приглашаем
+  owner_id  Int // кто пригласил
+  status    InviteStatus @default(pending)
+  createdAt DateTime     @default(now())
+
+  table          Table         @relation(fields: [table_id], references: [id], onDelete: Cascade)
+  user           User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  userFcmToken   UserFcmToken? @relation(fields: [userFcmTokenId], references: [id])
+  userFcmTokenId Int?
 }
 
 model UserToTable {
