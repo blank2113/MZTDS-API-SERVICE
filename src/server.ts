@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 3000;
 
 async function main() {
   try {
-    // Подключение к Redis
     await redisClient.connect();
     console.log("✅ Redis connected and ready");
 
