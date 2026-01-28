@@ -58,10 +58,8 @@ async function main() {
   }
 }
 
-// Запуск бэка
 main();
 
-// Запуск бота
 startBot()
   .then(() => console.log("✅ Bot started"))
   .catch((err) => {
