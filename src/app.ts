@@ -7,6 +7,7 @@ import { generateOpenApiDocument } from "./config/openapi.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { sessionConfig } from "./config/session.config.js";
 import { requestLogger } from "./middleware/logger.middleware.js";
+import expressBasicAuth from "express-basic-auth";
 
 export const app = express();
 
@@ -38,6 +39,12 @@ app.use(requestLogger);
 app.use(`${process.env.PREFIX}`, routes);
 app.use(
   "/docs",
+  expressBasicAuth({
+    users: {
+      [process.env.SWAGGER_USER || "admin"]:
+        process.env.SWAGGER_PASSWORD || "adminpassword",
+    },
+  }),
   swaggerUi.serve,
   swaggerUi.setup(generateOpenApiDocument(), {
     swaggerOptions: {
