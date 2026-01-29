@@ -13,6 +13,7 @@ env:
   REDIS_HOST: "localhost"
   REDIS_PASS: ""
   NODE_ENV: "development"
+  ALLOWED_ORIGINS: "https://workflow.minzifatravel.com , https://api-workflow.minzifatravel.com"
 
 jobs:
   install:
