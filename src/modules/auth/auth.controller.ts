@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { catchAsync } from "../../utils/helper.js";
 import { RegisterDTO, registerSchema } from "./auth.schema.js";
 import { create, getMe, login } from "./auth.service.js";
-import { redisClient } from "../../redisClient.js";
+import { redisClient } from "../../config/redisClient.js";
 
 const MAX_SESSIONS = 3;
 
@@ -45,7 +45,7 @@ export const LoginUserHandler = catchAsync(
 
     req.session.save((err) => {
       if (err) return res.status(500).json({ message: "Session save failed" });
-      res.status(200).json({ message: "Logged in!", sessionId });
+      res.status(200).json({ message: "Logged in!" });
     });
   },
 );

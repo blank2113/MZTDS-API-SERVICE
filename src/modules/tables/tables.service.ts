@@ -126,6 +126,7 @@ export const updateTable = async (
     });
   });
 };
+
 export const deleteTable = async (
   user_id: number,
   table_id: number,

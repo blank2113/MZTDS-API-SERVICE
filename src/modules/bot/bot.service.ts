@@ -1,6 +1,5 @@
-// src/bot/bot.service.ts
 import { Bot } from "grammy";
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../../lib/prisma.js";
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN is not set");
@@ -30,7 +29,6 @@ bot.command("start", async (ctx) => {
     return ctx.reply("✅ Вы уже подписаны на уведомления с системы");
   }
 
-  // Если токен не передан — нельзя привязать
   if (!token) {
     return ctx.reply(
       "❌ Чтобы подписаться на уведомления, используйте ссылку в формате /start <token>",
@@ -45,7 +43,6 @@ bot.command("start", async (ctx) => {
     return ctx.reply("❌ Ссылка недействительна или устарела");
   }
 
-  // Находим пользователя по email из токена
   const dbUser = await prisma.user.findUnique({
     where: { email: link.email },
   });
@@ -54,7 +51,6 @@ bot.command("start", async (ctx) => {
     return ctx.reply("❌ Пользователь не найден в системе");
   }
 
-  // Привязываем Telegram и помечаем токен как использованный
   await prisma.$transaction([
     prisma.user.update({
       where: { email: link.email },

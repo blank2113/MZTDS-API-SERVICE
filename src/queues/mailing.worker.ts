@@ -1,6 +1,6 @@
 import { Worker } from "bullmq";
 import { prisma } from "../lib/prisma.js";
-import { bot } from "../bot/bot.service.js";
+import { bot } from "../modules/bot/bot.service.js";
 import { redisOptions } from "./mailing.queue.js";
 
 export const mailingWorker = new Worker(

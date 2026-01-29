@@ -7,6 +7,7 @@ import {
   GetAllUserInSystemHandler,
   GetTableUserHandler,
   GetTableUsersHandler,
+  UpdateProfileHandler,
 } from "./users.controller.js";
 import { requireAuth } from "../../middleware/auth.middleware.js";
 import { registerUsersOpenApi } from "./users.openapi.js";
@@ -74,5 +75,7 @@ router.post(
 );
 
 router.get("/", requireAuth, GetAllUserInSystemHandler);
+
+router.put("/", requireAuth, UpdateProfileHandler);
 
 export default router;

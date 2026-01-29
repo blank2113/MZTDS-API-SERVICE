@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utils/helper.js";
-import { createNotification } from "./notification.service.js";
+import { createNotification, generateTgLink } from "./notification.service.js";
 
 export const CreateNotificationHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -14,3 +14,10 @@ export const CreateNotificationHandler = catchAsync(
     });
   },
 );
+
+export const TgLinkHandler = catchAsync(async (req: Request, res: Response) => {
+  const user_id = Number(req.session.user_id);
+  const data = await generateTgLink(user_id);
+
+  res.status(201).json({ link: data });
+});
