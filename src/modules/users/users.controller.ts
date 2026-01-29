@@ -6,6 +6,7 @@ import {
   getAllUserExpectAdmins,
   getTableUser,
   getTableUsers,
+  updateProfile,
 } from "./users.service.js";
 
 export const GetTableUserHandler = catchAsync(
@@ -47,5 +48,13 @@ export const GetAllUserInSystemHandler = catchAsync(
     const user_id = Number(req.session.user_id);
     const users = await getAllUserExpectAdmins(user_id);
     res.status(200).json(users);
+  },
+);
+
+export const UpdateProfileHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const user_id = Number(req.session.user_id);
+    const result = await updateProfile(user_id, req.body);
+    res.status(201).json(result);
   },
 );

@@ -1,8 +1,14 @@
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import { AppError } from "../types/common.js";
 
-export const errorHandler = (err: unknown, req: Request, res: Response) => {
+export const errorHandler = (
+  err: unknown,
+  req: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction,
+) => {
   if (err instanceof ZodError) {
     return res.status(422).json({
       success: false,

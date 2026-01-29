@@ -1,11 +1,11 @@
 import { app } from "./app.js";
-import { startBot } from "./bot/bot.service.js";
+import { startBot } from "./modules/bot/bot.service.js";
 import { createAdmin } from "./config/create.admins.js";
 import { prisma } from "./lib/prisma.js";
 import { cleanQueue } from "./queues/mailing.queue.js";
 import { mailingWorker } from "./queues/mailing.worker.js";
 
-import { redisClient } from "./redisClient.js";
+import { redisClient } from "./config/redisClient.js";
 
 const PORT = process.env.PORT || 3000;
 
@@ -58,13 +58,14 @@ async function main() {
   }
 }
 
-// Запуск бэка
 main();
 
-// Запуск бота
-startBot()
-  .then(() => console.log("✅ Bot started"))
-  .catch((err) => {
-    console.error("❌ Bot failed to start:", err);
-    process.exit(1);
-  });
+if (process.env.NODE_ENV !== "development") {
+  // Запуск бота
+  startBot()
+    .then(() => console.log("✅ Bot started"))
+    .catch((err) => {
+      console.error("❌ Bot failed to start:", err);
+      process.exit(1);
+    });
+}

@@ -6,7 +6,7 @@ export function registerNotificationOpenApi() {
   registry.registerPath({
     method: "post",
     path: `${prefix}/notification/{table_id}`,
-    tags: ["Notification"],
+    tags: ["Telegram"],
     summary: "Send notification for users in this table",
     description: "Send notification for users in this table",
     parameters: [
@@ -45,6 +45,33 @@ export function registerNotificationOpenApi() {
                 message: {
                   type: "string",
                   example: "Notification successfully sent ✅",
+                },
+              },
+            },
+          },
+        },
+      },
+      401: { description: "Unauthorized" },
+    },
+  });
+  registry.registerPath({
+    method: "get",
+    path: `${prefix}/notification/tg_link`,
+    tags: ["Telegram"],
+    summary: "Get tg link",
+    description: "Returns tg link",
+    responses: {
+      200: {
+        description: "All user in table",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                link: {
+                  type: "string",
+                  example:
+                    "https://t.me/WorkflowMinzifaTravel_bot?start=${token}",
                 },
               },
             },

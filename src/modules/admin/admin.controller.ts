@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utils/helper.js";
-import { redisClient } from "../../redisClient.js";
+import { redisClient } from "../../config/redisClient.js";
 
 export const GetUserSessionsHandler = catchAsync(
   async (req: Request, res: Response) => {

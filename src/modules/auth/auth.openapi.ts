@@ -168,7 +168,6 @@ export function registerAuthOpenApi() {
               type: "object",
               properties: {
                 message: { type: "string", example: "Logged in!" },
-                sessionId: { type: "string", example: "abc123sessionid" },
               },
             },
           },
