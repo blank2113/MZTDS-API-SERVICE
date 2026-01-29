@@ -10,19 +10,18 @@ import { requestLogger } from "./middleware/logger.middleware.js";
 
 export const app = express();
 
+const allowedOrigins = process.env
+  .ALLOWED_ORIGINS!.split(",")
+  .map((o) => o.trim());
+
 app.use(sessionConfig);
 app.use(
   cors({
     origin:
-      process.env.NODE_ENV !== "development"
+      process.env.NODE_ENV === "development"
         ? (origin, callback) => {
             if (!origin) return callback(null, true);
-            if (
-              (process.env.ALLOWED_ORIGINS || "")
-                .split(",")
-                .map((o) => o.trim())
-                .includes(origin)
-            ) {
+            if (allowedOrigins.includes(origin)) {
               callback(null, true);
             } else {
               callback(new Error("Not allowed by CORS"));
