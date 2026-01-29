@@ -12,6 +12,7 @@ env:
   PREFIX: "/api/v1"
   REDIS_HOST: "localhost"
   REDIS_PASS: ""
+  NODE_ENV: "development"
 
 jobs:
   install:
