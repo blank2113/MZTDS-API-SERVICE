@@ -18,7 +18,7 @@ app.use(sessionConfig);
 app.use(
   cors({
     origin:
-      process.env.NODE_ENV !== "development"
+      process.env.NODE_ENV === "development"
         ? (origin, callback) => {
             if (!origin) return callback(null, true);
             if (allowedOrigins.includes(origin)) {
