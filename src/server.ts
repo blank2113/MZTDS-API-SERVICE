@@ -60,7 +60,7 @@ async function main() {
 
 main();
 
-if (process.env.NODE_ENV !== "development") {
+if (process.env.BOT_START === "start") {
   // Запуск бота
   startBot()
     .then(() => console.log("✅ Bot started"))
