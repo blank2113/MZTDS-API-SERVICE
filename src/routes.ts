@@ -8,6 +8,7 @@ import CardsRoutes from "./modules/cards/cards.routes.js";
 import NotificationRoutes from "./modules/notification/notification.routes.js";
 import PushNotificationRoutes from "./modules/push-notification/push.routes.js";
 import InviteRoutes from "./modules/invite/invite.routes.js";
+import logsRouter from "./logs/logs.route.js";
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use("/cards", CardsRoutes);
 router.use("/notification", NotificationRoutes);
 router.use("/fcm", PushNotificationRoutes);
 router.use("/invite", InviteRoutes);
+router.use("/logs", logsRouter);
 
 export default router;

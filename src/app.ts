@@ -6,6 +6,7 @@ import routes from "./routes.js";
 import { generateOpenApiDocument } from "./config/openapi.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { sessionConfig } from "./config/session.config.js";
+import { requestLogger } from "./middleware/logger.middleware.js";
 
 export const app = express();
 
@@ -47,5 +48,6 @@ app.use(
     },
   }),
 );
+app.use(requestLogger);
 
 app.use(errorHandler);
