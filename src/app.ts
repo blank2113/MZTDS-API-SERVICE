@@ -36,6 +36,7 @@ app.use(compression());
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(`${process.env.PREFIX}`, routes);
+app.use(requestLogger);
 app.use(
   "/docs",
   swaggerUi.serve,
@@ -48,6 +49,5 @@ app.use(
     },
   }),
 );
-app.use(requestLogger);
 
 app.use(errorHandler);
