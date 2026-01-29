@@ -2,9 +2,10 @@ import request from "supertest";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { prisma } from "../../lib/prisma.js";
 import { app } from "../../app.js";
-import { redisClient } from "../../config/redisClient.js";
+
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import { redisClient } from "../../config/redisClient.js";
 
 describe("Auth API (e2e)", () => {
   const password = "1234567";
