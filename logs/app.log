@@ -40,3 +40,16 @@
 {"durationMs":177,"ip":"::ffff:127.0.0.1","level":"info","message":"HTTP request","method":"DELETE","status":500,"timestamp":"2026-01-29T16:15:02.394Z","url":"/api/v1/users/126/350/350"}
 {"durationMs":812,"ip":"::ffff:127.0.0.1","level":"info","message":"HTTP request","method":"DELETE","status":201,"timestamp":"2026-01-29T16:15:02.476Z","url":"/api/v1/tables/128"}
 {"durationMs":491,"ip":"::ffff:127.0.0.1","level":"info","message":"HTTP request","method":"GET","status":200,"timestamp":"2026-01-29T16:15:02.891Z","url":"/api/v1/users/"}
+{"durationMs":4,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":404,"timestamp":"2026-02-02T11:25:52.829Z","url":"/"}
+{"durationMs":6,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":200,"timestamp":"2026-02-02T11:25:55.876Z","url":"/docs/"}
+{"durationMs":1,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:25:55.889Z","url":"/docs/swagger-ui.css"}
+{"durationMs":0,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:25:55.890Z","url":"/docs/swagger-ui-bundle.js"}
+{"durationMs":1,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:25:55.892Z","url":"/docs/swagger-ui-init.js"}
+{"durationMs":2,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:25:55.893Z","url":"/docs/swagger-ui-standalone-preset.js"}
+{"durationMs":1,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:25:56.118Z","url":"/docs/favicon-32x32.png"}
+{"durationMs":4,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:26:50.962Z","url":"/docs/"}
+{"durationMs":1,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:26:50.984Z","url":"/docs/swagger-ui-init.js"}
+{"durationMs":1,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:26:50.986Z","url":"/docs/swagger-ui.css"}
+{"durationMs":0,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:26:50.987Z","url":"/docs/swagger-ui-bundle.js"}
+{"durationMs":0,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:26:50.988Z","url":"/docs/swagger-ui-standalone-preset.js"}
+{"durationMs":0,"ip":"::1","level":"info","message":"HTTP request","method":"GET","status":304,"timestamp":"2026-02-02T11:26:51.111Z","url":"/docs/favicon-32x32.png"}
