@@ -54,6 +54,8 @@ export const getMe = async (id?: number) => {
       email: true,
       name: true,
       role: true,
+      telegram_id: true,
+      notification: true,
       created_at: true,
       updated_at: true,
     },
