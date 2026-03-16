@@ -12,9 +12,16 @@ export const loginSchema = z.object({
   email: z.email(),
   password: z.string().min(6),
 });
+
+export const resetPasswordSchema = z.object({
+  email: z.email(),
+  newPassword: z.string().min(6),
+});
+
 export const logoutFromSpecificSchema = z.object({
   session_id: z.string().min(5),
 });
 
 export type RegisterDTO = z.infer<typeof registerSchema>;
 export type LoginDTO = z.infer<typeof loginSchema>;
+export type ResetPasswordDTO = z.infer<typeof resetPasswordSchema>;

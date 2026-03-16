@@ -27,7 +27,7 @@ enum InviteStatus {
 
 model User {
   id           Int            @id @default(autoincrement())
-  name         String         @unique
+  name         String
   email        String         @unique
   password     String
   telegram_id  String?

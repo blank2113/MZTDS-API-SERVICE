@@ -7,7 +7,7 @@ on:
     branches: ["prod"]
 
 env:
-  DATABASE_URL: "postgresql://test:test@localhost:5432/test?schema=public"
+  DATABASE_URL: "postgresql://neondb_owner:npg_SK20cENzQhBv@ep-calm-dew-amdxbyx6-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=verify-full&channel_binding=require"
   JWT_SECRET: "testsecret"
   PREFIX: "/api/v1"
   REDIS_HOST: "localhost"

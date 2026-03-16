@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utils/helper.js";
 import { RegisterDTO, registerSchema } from "./auth.schema.js";
-import { create, getMe, login } from "./auth.service.js";
+import { create, getMe, login, resetPassword } from "./auth.service.js";
 import { redisClient } from "../../config/redisClient.js";
 
 const MAX_SESSIONS = 3;
@@ -141,3 +141,13 @@ export const getMeHandler = catchAsync(async (req: Request, res: Response) => {
   const user = await getMe(userId);
   res.status(200).json({ user });
 });
+
+export const ResetPasswordHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { email, newPassword } = req.body;
+    const result = await resetPassword(email, newPassword);
+    res
+      .status(200)
+      .json({ message: "Password reset successfully", user: result });
+  },
+);

@@ -4,6 +4,26 @@ import { prisma } from "../../lib/prisma.js";
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN is not set");
 
+const PLATFORM_NAME = process.env.APP_NAME || "Workflow Minzifa Travel";
+const PLATFORM_URL =
+  process.env.APP_URL || "https://workflow.minzifatravel.com";
+
+const HELP_TEXT =
+  "❌ Чтобы подписаться на уведомления, используйте ссылку из профиля в формате /start <token>";
+
+const INFO_TEXT =
+  `<b>📢 ${PLATFORM_NAME}: уведомления в Telegram</b>\n\n` +
+  `Этот бот отправляет ключевые события по вашим таблицам и задачам.\n\n` +
+  `<b>Что умеет бот:</b>\n` +
+  `• Оповещения о важных изменениях\n` +
+  `• Уведомления о приглашениях и статусах\n` +
+  `• Быстрые ссылки в систему\n\n` +
+  `<b>Как начать:</b>\n` +
+  `1) Сгенерируйте ссылку привязки в профиле\n` +
+  `2) Откройте её и подтвердите /start <token>\n` +
+  `3) Получайте уведомления здесь\n\n` +
+  `<a href="${PLATFORM_URL}">Открыть платформу</a>`;
+
 export const bot = new Bot(token);
 
 bot.api.setMyCommands([
@@ -26,13 +46,11 @@ bot.command("start", async (ctx) => {
   });
 
   if (existingUser && existingUser.notification) {
-    return ctx.reply("✅ Вы уже подписаны на уведомления с системы");
+    return ctx.reply("✅ Telegram уже привязан. Уведомления активны.");
   }
 
   if (!token) {
-    return ctx.reply(
-      "❌ Чтобы подписаться на уведомления, используйте ссылку в формате /start <token>",
-    );
+    return ctx.reply(HELP_TEXT);
   }
 
   const link = await prisma.tgLinkToken.findUnique({
@@ -40,7 +58,9 @@ bot.command("start", async (ctx) => {
   });
 
   if (!link || link.used || link.expiresAt < new Date()) {
-    return ctx.reply("❌ Ссылка недействительна или устарела");
+    return ctx.reply(
+      "❌ Ссылка недействительна или устарела. Сгенерируйте новую в профиле.",
+    );
   }
 
   const dbUser = await prisma.user.findUnique({
@@ -65,26 +85,13 @@ bot.command("start", async (ctx) => {
     }),
   ]);
 
-  return ctx.reply("✅ Telegram успешно привязан. Вы подписаны на рассылку");
+  return ctx.reply(
+    "✅ Telegram успешно привязан. Теперь все важные уведомления будут приходить сюда.",
+  );
 });
 
 bot.command("ping", (ctx) => ctx.reply("pong"));
-bot.command("info", (ctx) =>
-  ctx.reply(
-    `*📢 Информация о боте рассылок*\n\n` +
-      `Этот бот предназначен для получения уведомлений от платформы *Workflow Minzifa Travel*.\n` +
-      `Платформа работает по принципу системы *Jira*: задачи, уведомления и статусы проектов доступны для вашего удобства.\n\n` +
-      `*Функции бота:*\n` +
-      `• Получение уведомлений о новых задачах и изменениях\n` +
-      `• Контроль статусов задач и событий\n` +
-      `• Прямой доступ к информации из платформы через Telegram\n\n` +
-      `*ℹ️ Как использовать:* \n` +
-      `1️⃣ Нажмите кнопку /start и привяжите свой Telegram к аккаунту на платформе.\n` +
-      `2️⃣ Все важные уведомления будут приходить прямо сюда.\n\n` +
-      `*🔗 Платформа:* [Workflow Minzifa Travel](https://workflow.minzifatravel.com)`,
-    { parse_mode: "Markdown" },
-  ),
-);
+bot.command("info", (ctx) => ctx.reply(INFO_TEXT, { parse_mode: "HTML" }));
 
 bot.on("message", (ctx) => console.log("New message:", ctx.message.text));
 

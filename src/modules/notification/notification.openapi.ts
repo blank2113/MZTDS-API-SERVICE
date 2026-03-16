@@ -23,9 +23,49 @@ export function registerNotificationOpenApi() {
           "application/json": {
             schema: {
               type: "object",
+              required: ["message"],
               properties: {
-                test: {
+                title: {
                   type: "string",
+                  example: "Новый комментарий в задаче",
+                },
+                message: {
+                  type: "string",
+                  example:
+                    "Проверьте обновление карточки в таблице бронирований.",
+                },
+                type: {
+                  type: "string",
+                  example: "card.updated",
+                },
+                priority: {
+                  type: "string",
+                  enum: ["low", "normal", "high"],
+                  example: "normal",
+                },
+                actionText: {
+                  type: "string",
+                  example: "Открыть карточку",
+                },
+                actionUrl: {
+                  type: "string",
+                  format: "uri",
+                  example:
+                    "https://workflow.minzifatravel.com/tables/12/cards/55",
+                },
+                metadata: {
+                  type: "object",
+                  additionalProperties: {
+                    oneOf: [
+                      { type: "string" },
+                      { type: "number" },
+                      { type: "boolean" },
+                    ],
+                  },
+                  example: {
+                    assignee: "Aziz",
+                    status: "In Progress",
+                  },
                 },
               },
             },
@@ -35,7 +75,7 @@ export function registerNotificationOpenApi() {
       },
     },
     responses: {
-      200: {
+      201: {
         description: "Card in column",
         content: {
           "application/json": {
