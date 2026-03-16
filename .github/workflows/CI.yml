@@ -19,7 +19,7 @@ env:
   RESEND_API_KEY: "re_cvUCPUQZ_KjkKCexUJcqApTUuLaEfkJsV"
   RESEND_FROM_EMAIL: "Workflow <info@minzifatravel.com>"
   SUPPORT_EMAIL: "info@minzifatravel.com"
-
+  D3: ""
 jobs:
   install:
     runs-on: ubuntu-latest
