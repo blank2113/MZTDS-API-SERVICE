@@ -14,6 +14,11 @@ env:
   REDIS_PASS: ""
   NODE_ENV: "development"
   ALLOWED_ORIGINS: "https://workflow.minzifatravel.com , https://api-workflow.minzifatravel.com"
+  APP_URL: "https://workflow.minzifatravel.com"
+  APP_NAME: "Workflow"
+  RESEND_API_KEY: "re_cvUCPUQZ_KjkKCexUJcqApTUuLaEfkJsV"
+  RESEND_FROM_EMAIL: "Workflow <info@minzifatravel.com>"
+  SUPPORT_EMAIL: "info@minzifatravel.com"
 
 jobs:
   install:
