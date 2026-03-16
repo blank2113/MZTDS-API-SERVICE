@@ -5,10 +5,12 @@ import { redisClient } from "../config/redisClient.js";
 
 let io: Server | null = null;
 
-const parseAllowedOrigins = (): string[] => {
+const parseAllowedOrigins = (): string | string[] | boolean => {
   const value = process.env.ALLOWED_ORIGINS;
   if (!value) {
-    return ["*"];
+    // В production без явного списка — запрещаем все origins (fail-safe).
+    // В dev/test — разрешаем все для удобства локальной разработки.
+    return process.env.NODE_ENV === "production" ? false : "*";
   }
 
   const origins = value
@@ -16,7 +18,7 @@ const parseAllowedOrigins = (): string[] => {
     .map((item) => item.trim())
     .filter(Boolean);
 
-  return origins.length ? origins : ["*"];
+  return origins.length ? origins : false;
 };
 
 export const tableRoom = (tableId: number | string): string =>

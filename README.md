@@ -63,7 +63,8 @@ cd MZTDS-API-SERVICE
 - `table:<tableId>`
 - `user:<userId>`
 
-В production доступ к комнатам проверяется по серверной сессии (`connect.sid` + Redis).
+В production доступ к комнатам проверяется по серверной сессии (`connect.sid` + Redis).  
+В production обязательно задать переменную окружения `ALLOWED_ORIGINS` (список через запятую) — без неё все WebSocket-соединения из браузеров будут отклонены на уровне CORS.
 
 ### 1. Установить клиент на фронте
 
