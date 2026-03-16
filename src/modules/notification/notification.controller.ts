@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utils/helper.js";
 import { createNotification, generateTgLink } from "./notification.service.js";
+import {
+  NotificationBodyDTO,
+  NotificationParamsDTO,
+} from "./notification.schema.js";
 
 export const CreateNotificationHandler = catchAsync(
   async (req: Request, res: Response) => {
     const user_id = Number(req.session.user_id);
-    const table_id = Number(req.params.table_id);
+    const { table_id } = req.params as unknown as NotificationParamsDTO;
+    const payload = req.body as NotificationBodyDTO;
 
-    await createNotification(user_id, table_id, req.body);
+    await createNotification(user_id, table_id, payload);
 
     res.status(201).json({
       message: "Notification successfully sent ✅",

@@ -2,6 +2,7 @@ import { Card, Column } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import { CreateColumnDTO } from "./columns.schema.js";
 import { ApiError } from "../../types/common.js";
+import { emitTableEvent } from "../../realtime/realtime.server.js";
 
 export const getColumn = async (
   id: number,
@@ -29,19 +30,25 @@ export const createColumn = async (
   table_id: number,
   data: CreateColumnDTO,
 ): Promise<Column | null> => {
-  return prisma.column.create({
+  const column = await prisma.column.create({
     data: {
       table_id: table_id,
       data: data.data,
     },
   });
+
+  emitTableEvent(table_id, "column.created", {
+    column,
+  });
+
+  return column;
 };
 
 export const updateColumn = async (
   id: number,
   data: CreateColumnDTO,
 ): Promise<Column | null> => {
-  return prisma.$transaction(async (tx) => {
+  const updated = await prisma.$transaction(async (tx) => {
     const existColumn = await tx.column.findUnique({
       where: { id: id },
     });
@@ -56,6 +63,14 @@ export const updateColumn = async (
       where: { id: id },
     });
   });
+
+  if (updated) {
+    emitTableEvent(updated.table_id, "column.updated", {
+      column: updated,
+    });
+  }
+
+  return updated;
 };
 
 export const deleteColumn = async (id: number) => {
@@ -63,6 +78,12 @@ export const deleteColumn = async (id: number) => {
     const deleted = await prisma.column.delete({
       where: { id },
     });
+
+    emitTableEvent(deleted.table_id, "column.deleted", {
+      column_id: deleted.id,
+      table_id: deleted.table_id,
+    });
+
     return deleted;
   } catch (err) {
     // Если колонки нет — возвращаем null

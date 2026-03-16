@@ -8,7 +8,7 @@ export default defineConfig({
     retry: 3,
     pool: "forks",
     testTimeout: 10000,
-
+    include: ["src/**/*.test.ts"],
     sequence: {
       concurrent: false,
     },
@@ -16,6 +16,6 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html"],
     },
-    exclude: ["node_modules", "dist"],
+    exclude: ["**/node_modules/**", "**/dist/**"],
   },
 });

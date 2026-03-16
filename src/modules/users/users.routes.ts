@@ -11,7 +11,6 @@ import {
 } from "./users.controller.js";
 import { requireAuth } from "../../middleware/auth.middleware.js";
 import { registerUsersOpenApi } from "./users.openapi.js";
-import { CreateTableHandler } from "../tables/tables.controller.js";
 import { validate } from "../../middleware/validate.middleware.js";
 import {
   AddUserToTableSchema,
@@ -65,13 +64,6 @@ router.delete(
   accessByTable(resolveTableFromTable, [TableRole.OWNER, TableRole.EDITOR]),
   validate(DeleteUserFromTableSchema2, "params"),
   DeleteUserFromTableHandler,
-);
-
-router.post(
-  "/",
-  accessByTable(resolveTableFromTable, [TableRole.OWNER, TableRole.EDITOR]),
-  requireAuth,
-  CreateTableHandler,
 );
 
 router.get("/", requireAuth, GetAllUserInSystemHandler);

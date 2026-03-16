@@ -1,9 +1,11 @@
 import { app } from "./app.js";
+import { createServer } from "http";
 import { startBot } from "./modules/bot/bot.service.js";
 import { createAdmin } from "./config/create.admins.js";
 import { prisma } from "./lib/prisma.js";
 import { cleanQueue } from "./queues/mailing.queue.js";
 import { mailingWorker } from "./queues/mailing.worker.js";
+import { initRealtimeServer } from "./realtime/realtime.server.js";
 
 import { redisClient } from "./config/redisClient.js";
 
@@ -33,7 +35,10 @@ async function main() {
     });
 
     // Запуск Express
-    const server = app.listen(PORT, () => {
+    const httpServer = createServer(app);
+    initRealtimeServer(httpServer);
+
+    const server = httpServer.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
 

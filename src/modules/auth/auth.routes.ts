@@ -7,6 +7,7 @@ import {
   GetSessionsHandler,
   CreateUserHandler,
   getMeHandler,
+  ResetPasswordHandler,
 } from "./auth.controller.js";
 import { registerAuthOpenApi } from "./auth.openapi.js";
 import { validate } from "../../middleware/validate.middleware.js";
@@ -14,6 +15,7 @@ import {
   loginSchema,
   logoutFromSpecificSchema,
   registerSchema,
+  resetPasswordSchema,
 } from "./auth.schema.js";
 import { requireSession } from "../../middleware/validateSession.middleware.js";
 
@@ -22,6 +24,11 @@ registerAuthOpenApi();
 
 router.post("/register", validate(registerSchema, "body"), CreateUserHandler);
 router.post("/login", validate(loginSchema, "body"), LoginUserHandler);
+router.post(
+  "/reset-password",
+  validate(resetPasswordSchema, "body"),
+  ResetPasswordHandler,
+);
 router.post("/logout", requireSession, LogoutUserHandler);
 router.delete("/logout-all", requireSession, LogoutAllHandler);
 router.delete(
